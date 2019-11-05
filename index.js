@@ -19,21 +19,8 @@ window.addEventListener("load", (event) => {
     var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
     inputUrl.value = localStorage.getItem("url")
     for (let index = 0; index < localStorage.getItem("count"); index++) {
-        
-        //create function
-        let li = document.createElement("li")
-        let a = document.createElement("a")
-        li.appendChild(a)
-        var att = document.createAttribute("href")
-        var target = document.createAttribute("target")
-        target.value = "_blank"
-        att.value = inputUrl.value + splits[index]
-        a.setAttributeNode(att)
-        a.setAttributeNode(target)
-        a.innerHTML = splits[index]
-        list.appendChild(li)
+        createLi(splits[index])
         arrayList.push(splits[index])
-        
     }
 });
 
@@ -51,20 +38,26 @@ button.addEventListener('click', (event) => {
     span.textContent = localStorage.getItem("count")
     span.style.color = random_rgba()
     
-    //create function
-    let li = document.createElement("li")
-    let a = document.createElement("a")
-    li.appendChild(a)
-    var att = document.createAttribute("href")
-    var target = document.createAttribute("target")
-    target.value = "_blank"
-    att.value = inputUrl.value + document.getElementById('inputValue').value
-    a.setAttributeNode(att)
-    a.setAttributeNode(target)
-    a.innerHTML = document.getElementById('inputValue').value
-    list.appendChild(li)
+    createLi(null)
 
 });
+
+function createLi(value) {
+    if (value == null){
+        value = document.getElementById('inputValue').value
+    }
+        let li = document.createElement("li")
+        let a = document.createElement("a")
+        li.appendChild(a)
+        var att = document.createAttribute("href")
+        var target = document.createAttribute("target")
+        target.value = "_blank"
+        att.value = inputUrl.value + value
+        a.setAttributeNode(att)
+        a.setAttributeNode(target)
+        a.innerHTML = value
+        list.appendChild(li)
+}
 
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255
