@@ -1,4 +1,5 @@
 const span = document.getElementById('contador')
+const removeList = document.getElementById('removeList')
 const button = document.getElementById('addList')
 const saveUrl = document.getElementById('saveUrl')
 const inputUrl = document.getElementById('inputUrl')
@@ -13,23 +14,25 @@ else count = parseInt(str_count)
 
 //Carrega as informações no reload
 window.addEventListener("load", (event) => {
+    load()
+});
 
+function load() {
     event.preventDefault()
 
     //Inicializa contador a cada reload
     span.textContent = localStorage.getItem("count")
 
+    //Inicializa a URL setada
+    inputUrl.value = localStorage.getItem("url")
+    
     //Inicializa os Jiras salvos
     var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
     for (let index = 0; index < localStorage.getItem("count"); index++) {
       createLi(splits[index])
       arrayList.push(splits[index])
     }
-
-    //Inicializa a URL setada
-    inputUrl.value = localStorage.getItem("url")
-
-});
+}
 
 //Salva URL que sera concatenada
 saveUrl.addEventListener('click', (event) => {
@@ -64,22 +67,32 @@ function createLi(value) {
 
   let li = document.createElement("li")
   let a = document.createElement("a")
+  let i = document.createElement("i")
 
   li.appendChild(a)
+  li.appendChild(i)
 
   var att = document.createAttribute("href")
   var target = document.createAttribute("target")
+  var nameClass = document.createAttribute("class")
 
   target.value = "_blank"
   att.value = inputUrl.value + value
+  nameClass.value = "material-icons"
 
   a.setAttributeNode(att)
   a.setAttributeNode(target)
+  i.setAttributeNode(nameClass)
   a.innerHTML = value
+  i.innerText = "close"
 
   list.appendChild(li)
 
 }
+
+removeList.addEventListener('click', (event) => {
+    event.preventDefault()
+})
 
 //Colore os links e o contador
 function random_rgba() {
