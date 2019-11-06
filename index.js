@@ -1,44 +1,46 @@
-const span = document.getElementById('contador')
-const removeList = document.getElementById('removeList')
-const button = document.getElementById('addList')
-const saveUrl = document.getElementById('saveUrl')
-const inputUrl = document.getElementById('inputUrl')
-const list = document.getElementById('list')
+const span       = document.getElementById('contador')
+const button     = document.getElementById('addList')
+const saveUrl    = document.getElementById('saveUrl')
+const inputUrl   = document.getElementById('inputUrl')
+const list       = document.getElementById('list')
 const inputValue = document.getElementById('inputValue')
-var arrayList = []
-var count = 0
+var arrayList    = []
+var count        = 0
 str_count = localStorage.getItem("count")
 
 if (str_count == null || str_count == "null") count = 0
 else count = parseInt(str_count)
 
 //Carrega as informações no reload
-window.addEventListener("load", (event) => {
-    load()
+window.addEventListener("load", () => {
+  load()
 });
 
 function load() {
-    event.preventDefault()
 
-    //Inicializa contador a cada reload
-    span.textContent = localStorage.getItem("count")
+  event.preventDefault()
 
-    //Inicializa a URL setada
-    inputUrl.value = localStorage.getItem("url")
-    
-    //Inicializa os Jiras salvos
-    var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
-    for (let index = 0; index < localStorage.getItem("count"); index++) {
-      createLi(splits[index])
-      arrayList.push(splits[index])
-    }
+  //Inicializa contador a cada reload
+  span.textContent = localStorage.getItem("count")
+
+  //Inicializa a URL setada
+  inputUrl.value = localStorage.getItem("url")
+  
+  //Inicializa os Jiras salvos
+  var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
+  for (let index = 0; index < localStorage.getItem("count"); index++) {
+    createLi(splits[index])
+    arrayList.push(splits[index])
+
+  }
+
 }
 
 //Salva URL que sera concatenada
 saveUrl.addEventListener('click', (event) => {
 
-    event.preventDefault()
-    localStorage.setItem("url", inputUrl.value)
+  event.preventDefault()
+  localStorage.setItem("url", inputUrl.value)
 
 })
 
@@ -65,37 +67,28 @@ function createLi(value) {
 
   if (value == null) value = inputValue.value
 
-  let li = document.createElement("li")
-  let a = document.createElement("a")
-  let i = document.createElement("i")
+  let li   = document.createElement("li")
+  let a    = document.createElement("a")
 
   li.appendChild(a)
-  li.appendChild(i)
 
-  var att = document.createAttribute("href")
-  var target = document.createAttribute("target")
-  var nameClass = document.createAttribute("class")
+  let att       = document.createAttribute("href")
+  let target    = document.createAttribute("target")
 
-  target.value = "_blank"
-  att.value = inputUrl.value + value
-  nameClass.value = "material-icons"
+  target.value    = "_blank"
+  att.value       = inputUrl.value + value
 
   a.setAttributeNode(att)
   a.setAttributeNode(target)
-  i.setAttributeNode(nameClass)
+
   a.innerHTML = value
-  i.innerText = "close"
 
   list.appendChild(li)
 
 }
 
-removeList.addEventListener('click', (event) => {
-    event.preventDefault()
-})
-
 //Colore os links e o contador
 function random_rgba() {
-    var o = Math.round, r = Math.random, s = 255
-    return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s)
+  var o = Math.round, r = Math.random, s = 255
+  return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s)
 }
