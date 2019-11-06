@@ -1,11 +1,12 @@
-const span       = document.getElementById('contador')
-const button     = document.getElementById('addList')
-const saveUrl    = document.getElementById('saveUrl')
-const inputUrl   = document.getElementById('inputUrl')
-const list       = document.getElementById('list')
+const span = document.getElementById('contador')
+const button = document.getElementById('addList')
+const buttonRemove = document.getElementById('removeList')
+const saveUrl = document.getElementById('saveUrl')
+const inputUrl = document.getElementById('inputUrl')
+const list = document.getElementById('list')
 const inputValue = document.getElementById('inputValue')
-var arrayList    = []
-var count        = 0
+var arrayList = []
+var count = 0
 str_count = localStorage.getItem("count")
 
 if (str_count == null || str_count == "null") count = 0
@@ -25,15 +26,17 @@ function load() {
 
   //Inicializa a URL setada
   inputUrl.value = localStorage.getItem("url")
-  
+
   //Inicializa os Jiras salvos
-  var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
-  for (let index = 0; index < localStorage.getItem("count"); index++) {
-    createLi(splits[index])
-    arrayList.push(splits[index])
+  if (localStorage.getItem("list") != null) {
+    var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
 
+    for (let index = 0; index < localStorage.getItem("count"); index++) {
+      createLi(splits[index])
+      arrayList.push(splits[index])
+
+    }
   }
-
 }
 
 //Salva URL que sera concatenada
@@ -54,10 +57,10 @@ button.addEventListener('click', (event) => {
 
   localStorage.setItem("count", count)
   localStorage.setItem("list", arrayList)
-  
+
   span.textContent = localStorage.getItem("count")
   span.style.color = random_rgba()
-  
+
   createLi(null)
 
 });
@@ -67,16 +70,16 @@ function createLi(value) {
 
   if (value == null) value = inputValue.value
 
-  let li   = document.createElement("li")
-  let a    = document.createElement("a")
+  let li = document.createElement("li")
+  let a = document.createElement("a")
 
   li.appendChild(a)
 
-  let att       = document.createAttribute("href")
-  let target    = document.createAttribute("target")
+  let att = document.createAttribute("href")
+  let target = document.createAttribute("target")
 
-  target.value    = "_blank"
-  att.value       = inputUrl.value + value
+  target.value = "_blank"
+  att.value = inputUrl.value + value
 
   a.setAttributeNode(att)
   a.setAttributeNode(target)
@@ -86,6 +89,34 @@ function createLi(value) {
   list.appendChild(li)
 
 }
+
+buttonRemove.addEventListener('click', (event) => {
+  event.preventDefault()
+  var newArray = []
+  var removed = false
+
+  if (localStorage.getItem("list") != null) {
+    var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
+    document.getElementById('list').innerHTML = ""
+    for (let index = 0; index < localStorage.getItem("count"); index++) {
+      if (splits[index] == inputValue.value) {
+        var count = localStorage.getItem("count")
+        removed = true
+      } else {
+        createLi(splits[index])
+        newArray.push(splits[index])
+      }
+    }
+    if (removed) {
+      count --
+      localStorage.setItem("count", count)
+      span.textContent = count
+    }
+    localStorage.removeItem("list")
+    localStorage.setItem("list", newArray)
+  }
+
+})
 
 //Colore os links e o contador
 function random_rgba() {
