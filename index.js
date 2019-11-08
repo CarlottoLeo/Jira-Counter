@@ -25,7 +25,7 @@ function loadPage() {
         var splits = localStorage.getItem("list").split(',', count)
     }
     if (url == null) url = "https://natura.atlassian.net/browse/"
-    ul.innerHTML = ""
+    if (ul) ul.innerHTML = ""
     inputUrl.value = url
     for (let index = 0; index < localStorage.getItem("count"); index++) {
         let li = document.createElement("li")
