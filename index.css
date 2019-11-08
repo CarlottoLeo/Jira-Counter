@@ -6,15 +6,16 @@ h1 {
   color: whitesmoke;
 }
 
-#bossButton{
+#bossButton, #urlButton{
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #bossButton input{
-  margin-bottom: 30px;
   height: 40px;
-  width: 110px;
+  width: 120px;
 }
 
 input{
@@ -29,13 +30,12 @@ button {
   border: 3px solid whitesmoke;
   font-size: 1.3em;
   color: whitesmoke;
-  margin-bottom: 30px;
   height: 40px;
   transition: .8s;
 }
 
 button:hover {
-  background-color: blue;  
+  background-color: 7faeff;
   transition: .8s;
 }
 
