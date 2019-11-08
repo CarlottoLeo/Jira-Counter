@@ -35,7 +35,6 @@ function loadPage() {
         let target = document.createAttribute("target")
         target.value = "_blank"
         att.value = url + splits[index]
-        a.style.textDecoration = "none";
         a.setAttributeNode(att)
         a.setAttributeNode(target)
         a.innerHTML = splits[index]
