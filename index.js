@@ -1,125 +1,94 @@
-const span = document.getElementById('contador')
-const button = document.getElementById('addList')
+const contador = document.getElementById('contador')
+const buttonAdd = document.getElementById('addList')
 const buttonRemove = document.getElementById('removeList')
-const saveUrl = document.getElementById('saveUrl')
+const buttonSaveUrl = document.getElementById('saveUrl')
 const inputUrl = document.getElementById('inputUrl')
-const list = document.getElementById('list')
+const ul = document.getElementById('list')
 const inputValue = document.getElementById('inputValue')
-var arrayList = []
+const buttonReload = document.getElementById('reload')
 var count = 0
-str_count = localStorage.getItem("count")
+var list = []
+var url = ""
 
-if (str_count == null || str_count == "null") count = 0
-else count = parseInt(str_count)
-
-//Carrega as informações no reload
 window.addEventListener("load", () => {
-  load()
-});
-
-function load() {
-
-  event.preventDefault()
-
-  //Inicializa contador a cada reload
-  span.textContent = localStorage.getItem("count")
-
-  //Inicializa a URL setada
-  inputUrl.value = localStorage.getItem("url")
-
-  //Inicializa os Jiras salvos
-  if (localStorage.getItem("list") != null) {
-    var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
-
-    for (let index = 0; index < localStorage.getItem("count"); index++) {
-      createLi(splits[index])
-      arrayList.push(splits[index])
-
-    }
-  }
-}
-
-//Salva URL que sera concatenada
-saveUrl.addEventListener('click', (event) => {
-
-  event.preventDefault()
-  localStorage.setItem("url", inputUrl.value)
-
+    loadPage()
+    setValues(count, list, url)
 })
 
-//Adiciona o contador e a LI criada
-button.addEventListener('click', (event) => {
-
-  event.preventDefault()
-  count++
-
-  arrayList.push(inputValue.value)
-
-  localStorage.setItem("count", count)
-  localStorage.setItem("list", arrayList)
-
-  span.textContent = localStorage.getItem("count")
-  span.style.color = random_rgba()
-
-  createLi(null)
-
-});
-
-//Monta as LIs
-function createLi(value) {
-
-  if (value == null) value = inputValue.value
-
-  let li = document.createElement("li")
-  let a = document.createElement("a")
-
-  li.appendChild(a)
-
-  let att = document.createAttribute("href")
-  let target = document.createAttribute("target")
-
-  target.value = "_blank"
-  att.value = inputUrl.value + value
-
-  a.setAttributeNode(att)
-  a.setAttributeNode(target)
-
-  a.innerHTML = value
-
-  list.appendChild(li)
-
+function loadPage() {
+    list = localStorage.getItem("list")
+    count = localStorage.getItem("count")
+    url = localStorage.getItem("url")
+    if(count == null) count = 0
+    contador.textContent = count
+    if(localStorage.getItem("list")){
+        var splits = localStorage.getItem("list").split(',', count)
+    }
+    if(url == null) url = "https://natura.atlassian.net/browse/"
+    ul.innerHTML = ""
+    inputUrl.value = url
+    for (let index = 0; index < localStorage.getItem("count"); index++) {
+        let li = document.createElement("li")
+        let a = document.createElement("a")
+        li.appendChild(a)
+        let att = document.createAttribute("href")
+        let target = document.createAttribute("target")
+        target.value = "_blank"
+        att.value = url + splits[index]
+        a.setAttributeNode(att)
+        a.setAttributeNode(target)
+        a.innerHTML = splits[index]
+        ul.appendChild(li)
+    }
 }
 
-buttonRemove.addEventListener('click', (event) => {
-  event.preventDefault()
-  var newArray = []
-  var removed = false
-
-  if (localStorage.getItem("list") != null) {
-    var splits = localStorage.getItem("list").split(',', localStorage.getItem("count"))
-    document.getElementById('list').innerHTML = ""
+buttonAdd.addEventListener('click', () => {
+    var newList = []
+    newCount = 0
+    url = localStorage.getItem("url")
+    let idx = localStorage.getItem("count")
+    var splits = localStorage.getItem("list").split(',', idx)
     for (let index = 0; index < localStorage.getItem("count"); index++) {
-      if (splits[index] == inputValue.value) {
-        var count = localStorage.getItem("count")
-        removed = true
-      } else {
-        createLi(splits[index])
-        newArray.push(splits[index])
-      }
+        newCount++
+        newList.push(splits[index])
     }
-    if (removed) {
-      count --
-      localStorage.setItem("count", count)
-      span.textContent = count
-    }
-    localStorage.removeItem("list")
-    localStorage.setItem("list", newArray)
-  }
-
+    newCount++
+    newList.push(inputValue.value)
+    setValues(newCount, newList, url)
 })
 
-//Colore os links e o contador
-function random_rgba() {
-  var o = Math.round, r = Math.random, s = 255
-  return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s)
+buttonRemove.addEventListener('click', () => {
+    var newList = []
+    let idx = localStorage.getItem("count")
+    newCount = idx
+    url = localStorage.getItem("url")
+    var splits = localStorage.getItem("list").split(',', idx)
+    for (let index = 0; index < localStorage.getItem("count"); index++) {
+        if (splits[index].replace(" ", "") != inputValue.value.replace(" ", "")) {
+            newList.push(splits[index])
+        } else {
+            newCount--
+        }
+    }
+    setValues(newCount, newList, url)
+})
+
+buttonSaveUrl.addEventListener('click', () => {
+    list = localStorage.getItem("list")
+    count = localStorage.getItem("count")
+    url = inputUrl.value
+    setValues(count, list, url)
+})
+
+function setValues(count, list, url) {
+    localStorage.clear()
+    let newCount = count
+    let newList = list
+    let newUrl = url
+
+    localStorage.setItem("count", newCount)
+    localStorage.setItem("list", newList)
+    localStorage.setItem("url", newUrl)
+
+    loadPage()
 }
