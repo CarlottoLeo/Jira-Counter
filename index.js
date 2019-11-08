@@ -30,12 +30,12 @@ function loadPage() {
     for (let index = 0; index < localStorage.getItem("count"); index++) {
         let li = document.createElement("li")
         let a = document.createElement("a")
-        li.innerHTML = index+1 + '- '
         li.appendChild(a)
         let att = document.createAttribute("href")
         let target = document.createAttribute("target")
         target.value = "_blank"
         att.value = url + splits[index]
+        a.style.textDecoration = "none";
         a.setAttributeNode(att)
         a.setAttributeNode(target)
         a.innerHTML = splits[index]

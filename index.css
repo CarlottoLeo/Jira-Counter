@@ -6,11 +6,24 @@ h1 {
   color: whitesmoke;
 }
 
+hr {
+  border: 0;
+  height: 2px;
+  width: 80%;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, .75), rgba(255, 255, 255, 0));
+  margin-bottom: 2%;
+}
+
 #bossButton, #urlButton{
   display: flex;
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+#list {
+  text-align: center;
+  margin-left: -45px;
 }
 
 #bossButton input{
@@ -54,4 +67,13 @@ span {
 
 ul.a {
   list-style-type: circle;
+}
+
+#list li a {
+  font-size: 1.4em;
+  color: #000;
+}
+
+#inputUrl{
+  width: 232px;
 }
