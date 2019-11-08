@@ -19,12 +19,12 @@ function loadPage() {
     list = localStorage.getItem("list")
     count = localStorage.getItem("count")
     url = localStorage.getItem("url")
-    if(count == null) count = 0
+    if (count == null) count = 0
     contador.textContent = count
-    if(localStorage.getItem("list")){
+    if (localStorage.getItem("list")) {
         var splits = localStorage.getItem("list").split(',', count)
     }
-    if(url == null) url = "https://natura.atlassian.net/browse/"
+    if (url == null) url = "https://natura.atlassian.net/browse/"
     ul.innerHTML = ""
     inputUrl.value = url
     for (let index = 0; index < localStorage.getItem("count"); index++) {
@@ -42,44 +42,46 @@ function loadPage() {
     }
 }
 
-buttonAdd.addEventListener('click', () => {
-    var newList = []
-    newCount = 0
-    url = localStorage.getItem("url")
-    let idx = localStorage.getItem("count")
-    var splits = localStorage.getItem("list").split(',', idx)
-    for (let index = 0; index < localStorage.getItem("count"); index++) {
-        newCount++
-        newList.push(splits[index])
-    }
-    newCount++
-    newList.push(inputValue.value)
-    setValues(newCount, newList, url)
-})
-
-buttonRemove.addEventListener('click', () => {
-    var newList = []
-    let idx = localStorage.getItem("count")
-    newCount = idx
-    url = localStorage.getItem("url")
-    var splits = localStorage.getItem("list").split(',', idx)
-    for (let index = 0; index < localStorage.getItem("count"); index++) {
-        if (splits[index].replace(" ", "") != inputValue.value.replace(" ", "")) {
+window.onload = function () {
+    buttonAdd.addEventListener('click', () => {
+        var newList = []
+        newCount = 0
+        url = localStorage.getItem("url")
+        let idx = localStorage.getItem("count")
+        var splits = localStorage.getItem("list").split(',', idx)
+        for (let index = 0; index < localStorage.getItem("count"); index++) {
+            newCount++
             newList.push(splits[index])
-        } else {
-            newCount--
         }
-    }
-    setValues(newCount, newList, url)
-})
+        newCount++
+        newList.push(inputValue.value)
+        setValues(newCount, newList, url)
+    })
 
-buttonSaveUrl.addEventListener('click', () => {
-    list = localStorage.getItem("list")
-    count = localStorage.getItem("count")
-    url = inputUrl.value
-    setValues(count, list, url)
-})
+    buttonRemove.addEventListener('click', () => {
+        var newList = []
+        let idx = localStorage.getItem("count")
+        newCount = idx
+        url = localStorage.getItem("url")
+        var splits = localStorage.getItem("list").split(',', idx)
+        for (let index = 0; index < localStorage.getItem("count"); index++) {
+            if (splits[index].replace(" ", "") != inputValue.value.replace(" ", "")) {
+                newList.push(splits[index])
+            } else {
+                newCount--
+            }
+        }
+        setValues(newCount, newList, url)
+    })
 
+    buttonSaveUrl.addEventListener('click', () => {
+        list = localStorage.getItem("list")
+        count = localStorage.getItem("count")
+        url = inputUrl.value
+        setValues(count, list, url)
+    })
+
+}
 function setValues(count, list, url) {
     localStorage.clear()
     let newCount = count
