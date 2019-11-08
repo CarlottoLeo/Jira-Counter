@@ -51,3 +51,7 @@ span {
   display: flex;
   justify-content: flex-end;
 }
+
+ul.a {
+  list-style-type: circle;
+}
