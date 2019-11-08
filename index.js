@@ -20,7 +20,7 @@ function loadPage() {
     count = localStorage.getItem("count")
     url = localStorage.getItem("url")
     if (count == null) count = 0
-    contador.textContent = count
+    if(contador) contador.textContent = count
     if (localStorage.getItem("list")) {
         var splits = localStorage.getItem("list").split(',', count)
     }
@@ -42,7 +42,21 @@ function loadPage() {
     }
 }
 
+function setValues(count, list, url) {
+    localStorage.clear()
+    let newCount = count
+    let newList = list
+    let newUrl = url
+
+    localStorage.setItem("count", newCount)
+    localStorage.setItem("list", newList)
+    localStorage.setItem("url", newUrl)
+
+    loadPage()
+}
+
 window.onload = function () {
+
     buttonAdd.addEventListener('click', () => {
         var newList = []
         newCount = 0
@@ -81,16 +95,4 @@ window.onload = function () {
         setValues(count, list, url)
     })
 
-}
-function setValues(count, list, url) {
-    localStorage.clear()
-    let newCount = count
-    let newList = list
-    let newUrl = url
-
-    localStorage.setItem("count", newCount)
-    localStorage.setItem("list", newList)
-    localStorage.setItem("url", newUrl)
-
-    loadPage()
 }
