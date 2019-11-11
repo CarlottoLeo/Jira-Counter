@@ -8,6 +8,7 @@
 - [X] Permite acessar o Jira gravado
 
 ### Print da tela de apresentação:
+![2019-11-08_17-30](https://user-images.githubusercontent.com/9161268/68586130-b482d280-0462-11ea-81ee-512222aef584.png)
 
 ### Disponível versão para firefox:
 https://addons.mozilla.org/en-US/firefox/addon/jira-counter/?src=search
