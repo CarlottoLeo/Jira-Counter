@@ -59,6 +59,18 @@ window.onload = function () {
             setValues(newCount, newList, url)
         })
     }
+    
+    function setValues(count, list, url) {
+        localStorage.clear()
+        let newCount = count
+        let newList = list
+        let newUrl = url
+        localStorage.setItem("count", newCount)
+        localStorage.setItem("list", newList)
+        localStorage.setItem("url", newUrl)
+
+        loadPage()
+    }
     if(buttonRemove){
         buttonRemove.addEventListener('click', () => {
             var newList = []
