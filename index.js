@@ -42,18 +42,6 @@ function loadPage() {
     }
 }
 
-function setValues(count, list, url) {
-    localStorage.clear()
-    let newCount = count
-    let newList = list
-    let newUrl = url
-    localStorage.setItem("count", newCount)
-    localStorage.setItem("list", newList)
-    localStorage.setItem("url", newUrl)
-
-    loadPage()
-}
-
 window.onload = function () {
     if(buttonAdd){
         buttonAdd.addEventListener('click', () => {
