@@ -47,7 +47,6 @@ function setValues(count, list, url) {
     let newCount = count
     let newList = list
     let newUrl = url
-
     localStorage.setItem("count", newCount)
     localStorage.setItem("list", newList)
     localStorage.setItem("url", newUrl)
